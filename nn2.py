@@ -16,6 +16,8 @@ import copy
 # HDR Neural Net works with this one
 # np.random.seed(37891248)
 
+np.random.seed(65536)
+
 def sigmoid(x):
 	return 1.0 / (1.0 + np.exp(-x))
 
@@ -177,9 +179,9 @@ for index in range(0, len(labels)):
 	hdr_training_data.append([input, output])
 
 
-hdr = NeuralNet((784, 32, 32, 10))
+hdr = NeuralNet((784, 32, 10))
 
-hdr.train(hdr_training_data, 0.1, 10000, printinfo = 100)
+hdr.train(hdr_training_data, 1, 50000, printinfo = 1000)
 
 
 
@@ -227,3 +229,16 @@ if prediction == test_labels[index]:
 	print('CORRECT. index: ', index)
 else:
 	print('incorrect. index: ', index)
+
+
+correct = 0
+for index in range(len(test_labels)):
+
+	o = hdr.feed_forward(test_hbr_training_data[index][0])
+	prediction = np.argmax(o[-1:][0])
+
+
+	if prediction == test_labels[index]:
+		correct += 1
+
+print(correct, ' correct out of ', len(test_labels))
