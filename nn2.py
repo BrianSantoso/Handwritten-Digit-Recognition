@@ -215,14 +215,14 @@ for index in range(0, len(test_labels)):
 # Predict a random image!
 
 index = math.floor(np.random.rand() * len(test_images))
-# index = 2483
+# index = 7049
 print(mndata.display(test_images[index]))
 
 print('expected: ', np.argmax(test_hbr_training_data[index][1]), ' vector: ', test_hbr_training_data[index][1])
 o = hdr.feed_forward(test_hbr_training_data[index][0])
 
 prediction = np.argmax(o[-1:][0])
-print('output: ', prediction, '\naka: ', o[-1:][0])
+print('output: ', prediction, '\nvector: ', o[-1:][0])
 
 
 if prediction == test_labels[index]:
@@ -232,6 +232,7 @@ else:
 
 
 correct = 0
+incorrect_indices = []
 for index in range(len(test_labels)):
 
 	o = hdr.feed_forward(test_hbr_training_data[index][0])
@@ -240,5 +241,7 @@ for index in range(len(test_labels)):
 
 	if prediction == test_labels[index]:
 		correct += 1
-
+	else:
+		incorrect_indices.append(index)
 print(correct, ' correct out of ', len(test_labels))
+# print(incorrect_indices)
