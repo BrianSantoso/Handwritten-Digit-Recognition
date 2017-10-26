@@ -16,6 +16,7 @@ def format_data(images, labels):
 		data.append([input, output])
 	return data
 
+print('Loading Data...')
 mndata = MNIST('samples')
 images, labels = mndata.load_training()
 test_images, test_labels = mndata.load_testing()
@@ -24,15 +25,16 @@ hdr_training_data = format_data(images, labels)
 test_hbr_training_data = format_data(test_images, test_labels)
 
 hdr = neuralnet.NeuralNet((784, 77, 33, 10))
-hdr.train(hdr_training_data, 1, 30000)
+print('Training...')
+hdr.train(hdr_training_data, 1, 30000, printinfo=1000)
 
 # Predict a random image!
 index = math.floor(np.random.rand() * len(test_images))
 prediction, vector = hdr.predict(test_images[index])
 
 print(mndata.display(test_images[index]))
-print('expected: ', test_labels[index], ' vector: ', test_hbr_training_data[index][1])
-print('output: ', prediction, '\nvector: ', vector)
+print('expected: ', test_labels[index])
+print('output: ', prediction, '\nprobability: ', max(vector), '\nvector: ', vector)
 
 if prediction == test_labels[index]:
 	print('CORRECT. index: ', index)
@@ -71,6 +73,6 @@ for index in range(half, len(test_labels)):
 	else:
 		incorrect_indices.append(index)
 
-print(correct, ' correct out of ', half)
+print('\n', correct, ' correct out of ', half)
 print(correct / half * 100.0, '% accuracy')
 # print(incorrect_indices)
