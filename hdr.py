@@ -23,8 +23,8 @@ test_images, test_labels = mndata.load_testing()
 hdr_training_data = format_data(images, labels)
 test_hbr_training_data = format_data(test_images, test_labels)
 
-hdr = neuralnet.NeuralNet((784, 32, 10))
-hdr.train(hdr_training_data, 1, 50000, printinfo = 1000)
+hdr = neuralnet.NeuralNet((784, 77, 33, 10))
+hdr.train(hdr_training_data, 1, 30000)
 
 # Predict a random image!
 index = math.floor(np.random.rand() * len(test_images))
@@ -40,9 +40,30 @@ else:
 	print('INCORRECT. index: ', index)
 
 # Test Accuracy
+# Hyperparameters optimized based on first half of testing data
+# and true accuracy is calculated on second half of data
+# in order to avoid manually overfitting
+
+# First Half
+# correct = 0
+# incorrect_indices = []
+# half = int(len(test_labels) / 2)
+# for index in range(0, half):
+
+# 	prediction = hdr.predict(test_hbr_training_data[index][0])[0]
+# 	if prediction == test_labels[index]:
+# 		correct += 1
+# 	else:
+# 		incorrect_indices.append(index)
+
+# print(correct, ' correct out of ', half)
+# print(correct / half * 100.0, '% accuracy')
+
+# Second Half
 correct = 0
 incorrect_indices = []
-for index in range(len(test_labels)):
+half = int(len(test_labels) / 2)
+for index in range(half, len(test_labels)):
 
 	prediction = hdr.predict(test_hbr_training_data[index][0])[0]
 	if prediction == test_labels[index]:
@@ -50,7 +71,6 @@ for index in range(len(test_labels)):
 	else:
 		incorrect_indices.append(index)
 
-print(correct, ' correct out of ', len(test_labels))
-print(correct / len(test_labels) * 100.0, '% accuracy')
-
+print(correct, ' correct out of ', half)
+print(correct / half * 100.0, '% accuracy')
 # print(incorrect_indices)
