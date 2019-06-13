@@ -1,5 +1,5 @@
 # Handwritten Digit Recognition
-Handwritten Digit Recognition using Deep Neural Network with Mean Squared Error cost function and Gradient Descent back propagation
+Handwritten Digit Recognition using basic deep neural network implemented from scratch
 
 Run hdr.py to test
 
