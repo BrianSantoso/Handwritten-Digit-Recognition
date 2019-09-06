@@ -1,9 +1,9 @@
 # Handwritten Digit Recognition
-Handwritten Digit Recognition using basic deep neural network implemented from scratch
+Numpy implementation of a trainable Neural Network, trained on the classic MNIST dataset.
 
 Run hdr.py to test
 
 Training and Testing Data from MNIST:
 http://yann.lecun.com/exdb/mnist/
 
-By Brian Santoso 10/22/17
+Brian Santoso 10/22/17
